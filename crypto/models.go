@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 type currencyModel struct {
@@ -26,6 +28,7 @@ func getCurrenciesFromJSON() currencyModel {
 	return parseDataToObjct(data)
 }
 
+// Converte the received data to currencyModel object and returns it
 func parseDataToObjct(data []byte) currencyModel {
 	var currencies currencyModel
 
@@ -42,10 +45,16 @@ func parseDataToObjct(data []byte) currencyModel {
 		fmt.Println("error:", err)
 	}
 
-	// Convert the string values to Int
+	// Convert the string values to int
 	currencies.BRL, _ = strconv.Atoi(strings.Replace(obj.BRL, ".", "", 1))
 	currencies.EUR, _ = strconv.Atoi(strings.Replace(obj.EUR, ".", "", 1))
 	currencies.CAD, _ = strconv.Atoi(strings.Replace(obj.CAD, ".", "", 1))
 
 	return currencies
+}
+
+func getCryptoBtc() gin.H {
+	var response gin.H
+
+	return response
 }
