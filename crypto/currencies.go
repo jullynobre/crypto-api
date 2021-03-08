@@ -6,19 +6,11 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
-type currencyModel struct {
-	BRL int `binding:"required"`
-	EUR int `binding:"required"`
-	CAD int `binding:"required"`
-}
+var currencies currencyQuote = getCurrenciesFromJSON()
 
-var currencies currencyModel = getCurrenciesFromJSON()
-
-func getCurrenciesFromJSON() currencyModel {
+func getCurrenciesFromJSON() currencyQuote {
 	// read local json file
 	data, err := ioutil.ReadFile("./crypto/currencies.json")
 	if err != nil {
@@ -28,9 +20,9 @@ func getCurrenciesFromJSON() currencyModel {
 	return parseDataToObjct(data)
 }
 
-// Converte the received data to currencyModel object and returns it
-func parseDataToObjct(data []byte) currencyModel {
-	var currencies currencyModel
+// Converte the received data to currencyQuote object and returns it
+func parseDataToObjct(data []byte) currencyQuote {
+	var currencies currencyQuote
 
 	type currencyObj struct {
 		BRL string `binding:"required"`
@@ -51,10 +43,4 @@ func parseDataToObjct(data []byte) currencyModel {
 	currencies.CAD, _ = strconv.Atoi(strings.Replace(obj.CAD, ".", "", 1))
 
 	return currencies
-}
-
-func getCryptoBtc() gin.H {
-	var response gin.H
-
-	return response
 }
