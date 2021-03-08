@@ -11,9 +11,9 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.POST("/api/login", auth.LoginView)
-	r.GET("/api/crypto/btc", crypto.GetCryptoView)
-	r.POST("/api/crypto/btc", crypto.UpdateCryptoView)
+	r.POST("/api/login", auth.LoginEndpoint)
+	r.GET("/api/crypto/btc", crypto.GetCryptoEndpoint)
+	r.POST("/api/crypto/btc", crypto.UpdateCryptoEndpoint)
 
 	r.Run()
 }

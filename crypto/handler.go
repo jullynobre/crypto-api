@@ -6,15 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetCryptoView returns...
-func GetCryptoView(c *gin.Context) {
+// GetCryptoEndpoint returns...
+func GetCryptoEndpoint(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "retorno...",
 	})
 }
 
-// UpdateCryptoView does...
-func UpdateCryptoView(c *gin.Context) {
+// UpdateCryptoEndpoint does...
+func UpdateCryptoEndpoint(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "retorno...",
 	})

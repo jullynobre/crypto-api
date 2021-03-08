@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//LoginView returns...
-func LoginView(c *gin.Context) {
+//LoginEndpoint returns...
+func LoginEndpoint(c *gin.Context) {
 	var user userModel
 
 	if err := c.BindJSON(&user); err != nil {
