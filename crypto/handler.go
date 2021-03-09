@@ -8,10 +8,7 @@ import (
 
 // GetCryptoEndpoint returns...
 func GetCryptoEndpoint(c *gin.Context) {
-	getCryptoBtc()
-	c.JSON(http.StatusOK, gin.H{
-		"message": "retorno...",
-	})
+	c.JSON(http.StatusOK, getCryptoBtc())
 }
 
 // UpdateCryptoEndpoint does...

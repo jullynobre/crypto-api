@@ -16,7 +16,7 @@ type currencyRate struct {
 	Code        string  `binding:"required"`
 	Rate        string  `binding:"required"`
 	Description string  `binding:"required"`
-	RateFloat   float32 `json:"rate_float" binding:"required"`
+	RateFloat   float64 `json:"rate_float" binding:"required"`
 }
 
 type bpi struct {
