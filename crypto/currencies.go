@@ -3,47 +3,78 @@ package crypto
 import (
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"strconv"
 	"strings"
 )
 
-func getCurrenciesFromJSON() currencyQuote {
+func getCurrencies() currencyQuote {
 	// read local json file
 	data, err := ioutil.ReadFile("./crypto/currencies.json")
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	return parseDataToObjct(data)
+	var obj = parseDataToObjct(data)
+	var currencies currencyQuote
+
+	currencies.BRL = convertCurrencyStrToInt(obj.BRL)
+	currencies.EUR = convertCurrencyStrToInt(obj.EUR)
+	currencies.CAD = convertCurrencyStrToInt(obj.CAD)
+
+	return currencies
+}
+
+func updateCurrency(currency string, value int) {
+	data, err := ioutil.ReadFile("./crypto/currencies.json")
+	if err != nil {
+		fmt.Print(err)
+	}
+	var currencies = parseDataToObjct(data)
+
+	switch currency {
+	case "BRL":
+		currencies.BRL = convertCurrencyIntToStr(value)
+	case "CAD":
+		currencies.CAD = convertCurrencyIntToStr(value)
+	case "EUR":
+		currencies.EUR = convertCurrencyIntToStr(value)
+	default:
+		fmt.Println("Invalid currency")
+	}
+
+	// Converting currenciesObj to data
+	data, err = json.Marshal(currencies)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	// Saving data into file
+	err = ioutil.WriteFile("./crypto/currencies.json", data, fs.ModeType)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
 }
 
 // Converte the received data to currencyQuote object and returns it
-func parseDataToObjct(data []byte) currencyQuote {
-	var currencies currencyQuote
-
-	type currencyObj struct {
-		BRL string `binding:"required"`
-		EUR string `binding:"required"`
-		CAD string `binding:"required"`
-	}
-
-	var obj currencyObj
+func parseDataToObjct(data []byte) currencyQuoteStr {
+	var obj currencyQuoteStr
 
 	var err = json.Unmarshal(data, &obj)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
 
-	// Convert the string values to int
-	currencies.BRL, _ = strconv.Atoi(strings.Replace(obj.BRL, ".", "", 1))
-	currencies.EUR, _ = strconv.Atoi(strings.Replace(obj.EUR, ".", "", 1))
-	currencies.CAD, _ = strconv.Atoi(strings.Replace(obj.CAD, ".", "", 1))
+	return obj
+}
 
-	// Multiplying to use a thousandth of a cent as a unite
-	currencies.BRL = currencies.BRL * 10
-	currencies.EUR = currencies.EUR * 10
-	currencies.CAD = currencies.CAD * 10
+func convertCurrencyStrToInt(currencyStr string) int {
+	currencyInt, _ := strconv.Atoi(strings.Replace(currencyStr, ".", "", 1))
+	return currencyInt
+}
 
-	return currencies
+func convertCurrencyIntToStr(currencyInt int) string {
+	currencyStr := strconv.Itoa(currencyInt)
+	currencyStr = currencyStr[0:len(currencyStr)-4] + "." + currencyStr[len(currencyStr)-4:]
+	return currencyStr
 }

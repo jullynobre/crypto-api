@@ -6,6 +6,12 @@ type currencyQuote struct {
 	CAD int `binding:"required"`
 }
 
+type currencyQuoteStr struct {
+	BRL string `binding:"required"`
+	EUR string `binding:"required"`
+	CAD string `binding:"required"`
+}
+
 type time struct {
 	Updated    string `binding:"required"`
 	UpdatedISO string `binding:"required"`
