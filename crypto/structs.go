@@ -38,3 +38,8 @@ type cryptoResponse struct {
 	Disclaimer string `binding:"required"`
 	BPI        bpi    `binding:"required"`
 }
+
+type updateCryptoBody struct {
+	Currency string  `binding:"required"`
+	Value    float64 `binding:"required"`
+}
