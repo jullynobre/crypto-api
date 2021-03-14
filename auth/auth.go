@@ -1,6 +1,12 @@
 package auth
 
-import "regexp"
+import (
+	"os"
+	"regexp"
+	"time"
+
+	"github.com/dgrijalva/jwt-go"
+)
 
 type userModel struct {
 	Email    string `binding:"required"`
@@ -18,4 +24,23 @@ func (user userModel) validate() bool {
 		return true
 	}
 	return false
+}
+
+// CreateToken receives and user email and returns a valid token or and error
+func CreateToken(userEmail string) (string, error) {
+	var err error
+
+	os.Setenv("ACCESS_SECRET", "jdnfksdmfksd") //this should be in an env file
+	atClaims := jwt.MapClaims{}
+	atClaims["authorized"] = true
+	atClaims["user_email"] = userEmail
+	atClaims["exp"] = time.Now().Add(time.Minute * 15).Unix()
+	// Create token
+	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
+	// Sign token
+	token, err := at.SignedString([]byte(os.Getenv("ACCESS_SECRET")))
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
