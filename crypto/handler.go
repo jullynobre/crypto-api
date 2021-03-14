@@ -1,7 +1,6 @@
 package crypto
 
 import (
-	"local/crypto-api/auth"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,13 +8,6 @@ import (
 
 // GetCryptoEndpoint returns...
 func GetCryptoEndpoint(c *gin.Context) {
-	err := auth.ValidateToken(c.Request)
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Token inválido",
-		})
-		return
-	}
 	c.JSON(http.StatusOK, getCryptoBtc())
 }
 
@@ -26,6 +18,6 @@ func UpdateCryptoEndpoint(c *gin.Context) {
 	updateCurrency(body.Currency, int(body.Value*10000))
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "retorno...",
+		"message": "Valor alterado com sucesso",
 	})
 }
