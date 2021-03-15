@@ -2,7 +2,7 @@
 ### Requirements
 Go v1.16 ([Download](https://golang.org/dl/))
 ### Running
-Execute this command on project root folder
+Execute this command on project root folder:
 ```Bash
 go run main.go
 ```
