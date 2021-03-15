@@ -6,12 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetCryptoEndpoint returns...
+// GetCryptoEndpoint the exchange rate
 func GetCryptoEndpoint(c *gin.Context) {
 	c.JSON(http.StatusOK, getCryptoBtc())
 }
 
-// UpdateCryptoEndpoint does...
+// UpdateCryptoEndpoint updates the currency rate
 func UpdateCryptoEndpoint(c *gin.Context) {
 	var body updateCryptoBody
 	c.Bind(&body)

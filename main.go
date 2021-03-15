@@ -23,7 +23,7 @@ func main() {
 
 	// r.Use(CORSMiddleware())
 
-	r.Run()
+	r.Run(":8000")
 }
 
 // AuthMidleware checks if the used token is valid
