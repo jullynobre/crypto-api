@@ -1,6 +1,11 @@
 # Crypto API
 ### Requirements
 Go v1.16 ([Download](https://golang.org/dl/))
+### Running
+Execute this command on project root folder
+```Bash
+go run main.go
+```
 ### Endpoints
 This API is setted to run on port 8000 in order to avoid conflicts with the frontend server.
 - [POST] http://localhost:8000/api/login  
